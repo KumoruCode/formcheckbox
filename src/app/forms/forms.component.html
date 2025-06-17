@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h1>Formulario</h1>
+      <select class="form-select mb-3" (change)="getComunidades($any($event.target).value)">
+        <option value="">Seleccione una opción</option>
+        @for (numb of number; track numb) {
+          <option [value]="numb">{{ numb }}</option>
+        }
+      </select>
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <h2>Comunidades</h2>
+        <div formArrayName="comunidades" class="mb-3">
+          @for (comunidad of comunidades; track comunidad.id) {
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                [formControlName]="$index"
+                (change)="onCheckboxChange($event, $index)"
+                [id]="'comunidad-' + comunidad.id"
+              >
+              <label class="form-check-label" [for]="'comunidad-' + comunidad.id">
+                {{ comunidad.nombre }} ({{ comunidad.unidad }})
+              </label>
+            </div>
+          }
+        </div>
+
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </form>
+    </div>
+  </div>
+</div>
